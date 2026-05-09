@@ -1,0 +1,55 @@
+DROP TABLE IF EXISTS kb_article_tag;
+DROP TABLE IF EXISTS kb_article;
+DROP TABLE IF EXISTS kb_tag;
+DROP TABLE IF EXISTS kb_category;
+DROP TABLE IF EXISTS sync_fail_log;
+
+CREATE TABLE kb_category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    sort INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE kb_tag (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE kb_article (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    summary VARCHAR(500),
+    content CLOB,
+    category_id BIGINT,
+    author VARCHAR(100),
+    status VARCHAR(20) DEFAULT 'draft',
+    is_deleted BOOLEAN DEFAULT FALSE,
+    publish_time TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE kb_article_tag (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    article_id BIGINT NOT NULL,
+    tag_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_article_tag UNIQUE (article_id, tag_id)
+);
+
+CREATE TABLE sync_fail_log (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    biz_type VARCHAR(50) NOT NULL,
+    biz_id BIGINT NOT NULL,
+    payload CLOB,
+    error_msg CLOB,
+    retry_count INT DEFAULT 0,
+    status VARCHAR(20) DEFAULT 'PENDING',
+    next_retry_time TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

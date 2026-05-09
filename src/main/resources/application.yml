@@ -1,0 +1,65 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+spring:
+  application:
+    name: knowledge-search
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3307/knowledge_search?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  elasticsearch:
+    uris: http://localhost:9200
+  jackson:
+    default-property-inclusion: non_null
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    enable-open-api: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+app:
+  canal:
+    enabled: true
+    destination: example
+    server: 127.0.0.1:11111
+    username: "canal"
+    password: "canal123456"
+  sync:
+    full:
+      enabled: true
+      page-size: 500
+    retry:
+      enabled: true
+      max-attempts: 3
+      initial-delay: PT1M
+      scan-interval: PT5M
+
+logging:
+  level:
+    com.knowledge.search: INFO

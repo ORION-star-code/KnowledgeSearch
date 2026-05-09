@@ -1,0 +1,7 @@
+app:
+  canal:
+    enabled: true
+
+logging:
+  level:
+    root: INFO
