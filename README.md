@@ -173,67 +173,6 @@ http://localhost:5172/
 npm.cmd run build --prefix client
 ```
 
-## 主要接口
-
-文章管理：
-
-- `GET /admin/article`
-- `POST /admin/article`
-- `GET /admin/article/{id}`
-- `PUT /admin/article/{id}`
-- `DELETE /admin/article/{id}`
-- `PUT /admin/article/{id}/publish`
-- `PUT /admin/article/{id}/offline`
-
-分类管理：
-
-- `GET /admin/category`
-- `POST /admin/category`
-- `GET /admin/category/{id}`
-- `PUT /admin/category/{id}`
-- `DELETE /admin/category/{id}`
-
-标签管理：
-
-- `GET /admin/tag`
-- `POST /admin/tag`
-- `GET /admin/tag/{id}`
-- `PUT /admin/tag/{id}`
-- `DELETE /admin/tag/{id}`
-
-搜索：
-
-- `GET /search`
-
-同步管理：
-
-- `POST /admin/sync/full`
-- `GET /admin/sync/stats`
-- `GET /admin/sync/fail/list`
-- `POST /admin/sync/retry/{failId}`
-
-统一响应结构：
-
-```json
-{
-  "success": true,
-  "code": "OK",
-  "message": "success",
-  "data": {}
-}
-```
-
-分页响应结构：
-
-```json
-{
-  "pageNum": 1,
-  "pageSize": 10,
-  "total": 100,
-  "records": []
-}
-```
-
 ## 数据同步规则
 
 文章相关 ES 文档采用回源重建策略：
@@ -287,4 +226,3 @@ npm.cmd run build --prefix client
 - 当前默认配置适合本地开发，生产环境应将数据库密码、Canal 密码等敏感配置改为环境变量或外部配置。
 - V1 默认链路是 `Canal -> Sync Worker -> Elasticsearch`。
 - 不默认引入 RabbitMQ、Redis、IK 分词、搜索建议、热词统计等 V2 能力。
-- `target/`、`client/node_modules/`、`client/dist/`、`.idea/` 等生成或本地文件已通过 `.gitignore` 排除。
